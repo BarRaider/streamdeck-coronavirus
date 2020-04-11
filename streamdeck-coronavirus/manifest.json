@@ -1,0 +1,53 @@
+{
+  "Actions": [
+    {
+      "Icon": "Images/pluginIcon",
+      "Name": "Coronavirus Worldwide Stats",
+      "States": [
+        {
+          "Image": "Images/pluginAction",
+          "TitleAlignment": "middle",
+          "FontSize": "11"
+        }
+      ],
+      "SupportedInMultiActions": true,
+      "Tooltip": "Coronavirus (COVID-19) live updates on the Elgato Stream Deck",
+      "UUID": "com.barraider.coronavirus.worldwidestats",
+      "PropertyInspectorPath": "PropertyInspector/CoronaWorldwide.html"
+    },
+    {
+      "Icon": "Images/pluginIcon",
+      "Name": "Coronavirus Country Stats",
+      "States": [
+        {
+          "Image": "Images/pluginAction",
+          "TitleAlignment": "middle",
+          "FontSize": "11"
+        }
+      ],
+      "SupportedInMultiActions": true,
+      "Tooltip": "Coronavirus (COVID-19) live updates on the Elgato Stream Deck",
+      "UUID": "com.barraider.coronavirus.countrystats",
+      "PropertyInspectorPath": "PropertyInspector/CoronaCountry.html"
+    }
+  ],
+  "Author": "BarRaider",
+  "Description": "Coronavirus (COVID-19) live stats on the Stream Deck",
+  "Name": "Coronavirus (COVID-19)",
+  "Icon": "Images/pluginIcon",
+  "URL": "https://barraider.com/",
+  "Version": "1.3",
+  "CodePath": "com.barraider.coronavirus",
+  "Category": "Coronavirus [BarRaider]",
+  "CategoryIcon": "Images/categoryIcon",
+  "OS": [
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "4.6"
+  }
+}
