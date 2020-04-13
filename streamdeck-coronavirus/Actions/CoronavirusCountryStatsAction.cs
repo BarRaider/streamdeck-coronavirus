@@ -145,14 +145,16 @@ namespace BarRaider.Coronavirus
             }
 
 
-            if (!long.TryParse(stats.Deaths, out long deaths) || !long.TryParse(stats.Cases, out long allCases))
+            if (!long.TryParse(stats.Recovered, out long recovered) || 
+                !long.TryParse(stats.Deaths, out long deaths) ||
+                !long.TryParse(stats.Cases, out long allCases))
             {
                 Logger.Instance.LogMessage(TracingLevel.WARN, $"CoronavirusCountryStatsAction > Could not convert deaths/all cases to integer Deaths: {stats.Deaths} Case: {stats.Cases}");
                 return;
             }
 
             // Get the recovery rate as a percentage
-            double recoveryRate = (1 - ((double)deaths / (double)allCases)) * 100;
+            double recoveryRate = (double)recovered / (double)allCases * 100;
             using (Bitmap img = Tools.GenerateGenericKeyImage(out Graphics graphics))
             {
                 graphics.PageUnit = GraphicsUnit.Pixel;
