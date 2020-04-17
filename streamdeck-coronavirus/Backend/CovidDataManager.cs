@@ -19,7 +19,7 @@ namespace BarRaider.Coronavirus.Backend
         private static CovidDataManager instance = null;
         private static readonly object objLock = new object();
 
-        private const string COVID_API_SITE = "https://corona.lmao.ninja/";
+        private const string COVID_API_SITE = "https://corona.lmao.ninja/v2/";
         private const string API_WORLDWIDE = "all";
         private const string API_COUNTRIES = "countries";
         private const int REFRESH_RATE_SECONDS = 600;

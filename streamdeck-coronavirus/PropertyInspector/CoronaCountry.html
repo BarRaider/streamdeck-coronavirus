@@ -7,8 +7,10 @@
     <meta name=apple-mobile-web-app-status-bar-style content=black>
     <title>Corona Country Settings</title>
     <link rel="stylesheet" href="sdpi.css">
+    <link rel="stylesheet" href="rangeTooltip.css">
     <script src="sdtools.common.js"></script>
-    <script src="CoronaWorldwide.js"></script>
+    <script src="rangeTooltip.js"></script>
+    <script src="CoronaCountry.js"></script>
 </head>
 <body>
     <div class="sdpi-wrapper">
@@ -19,6 +21,28 @@
             <div class="sdpi-item-label">Country</div>
             <select class="sdpi-item-value select sdProperty sdList" id="countries" oninput="setSettings()" sdListTextProperty="name" sdListValueProperty="name" sdValueField="country"></select>
         </div>
+        <div type="checkbox" class="sdpi-item" id="dvShowFlag">
+            <div class="sdpi-item-label">Flag</div>
+            <div class="sdpi-item-value">
+                <input id="showFlag" type="checkbox" value="" class="sdProperty sdCheckbox" oninput="setSettings()">
+                <label for="showFlag" class="sdpi-item-label"><span></span>Show flag in background</label>
+            </div>
+        </div>
+        <div id="dvShowFlagSettings" style="display:none;">
+            <div type="range" class="sdpi-item sdShowTooltip" id="dvFlagOpacity">
+                <div class="sdpi-item-label" id="opacityLabel">Flag Opacity</div>
+                <div class="sdpi-item-value">
+                    <span class="clickable" value="1">1</span>
+                    <input type="range" min="1" max="100" value=50 list="numbers" data-suffix=" %" class="sdProperty" id="flagOpacity" oninput="setSettings()">
+                    <span class="clickable" value="100">100</span>
+                    <datalist id="numbers">
+                        <option>100</option>
+                    </datalist>
+                    <label for="flagOpacity" class="rangeLabel"></label>
+                </div>
+            </div>
+        </div>
+        <div class="sdpi-info-label hidden" style="top: -1000;" value="">Tooltip</div>
 
         <details class="message">
             <summary>Numbers in parenthesis are today's updates</summary>
@@ -33,5 +57,6 @@
             <summary>Green: Recovery Rate</summary>
         </details>
     </div>
+
 </body>
 </html>
