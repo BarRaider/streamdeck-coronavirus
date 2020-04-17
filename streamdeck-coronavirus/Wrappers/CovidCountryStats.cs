@@ -29,5 +29,8 @@ namespace BarRaider.Coronavirus.Wrappers
 
         [JsonProperty(PropertyName = "critical")]
         public string Critical { get; set; }
+
+        [JsonProperty(PropertyName = "countryInfo")]
+        public CovidCountryInfo Info { get; set; }
     }
 }

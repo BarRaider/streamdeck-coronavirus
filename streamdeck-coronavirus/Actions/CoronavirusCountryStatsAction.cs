@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,7 +33,9 @@ namespace BarRaider.Coronavirus
                 PluginSettings instance = new PluginSettings
                 {
                     Country = String.Empty,
-                    Countries = null
+                    Countries = null,
+                    ShowFlag = false,
+                    FlagOpacity = FLAG_OPACITY_DEFAULT.ToString()
                 };
                 return instance;
             }
@@ -42,6 +45,12 @@ namespace BarRaider.Coronavirus
 
             [JsonProperty(PropertyName = "countries")]
             public List<Country> Countries { get; set; }
+
+            [JsonProperty(PropertyName = "showFlag")]
+            public bool ShowFlag { get; set; }
+
+            [JsonProperty(PropertyName = "flagOpacity")]
+            public string FlagOpacity { get; set; }
         }
 
         #region Private Members
@@ -49,12 +58,15 @@ namespace BarRaider.Coronavirus
         private const int TOTAL_STAGES = 3;
         private const int STAGE_CHANGE_SECONDS = 5;
         private const string KEYPRESS_WEBSITE_URL = "https://www.worldometers.info/coronavirus/country/";
+        private const int FLAG_OPACITY_DEFAULT = 50;
 
         private readonly PluginSettings settings;
         private int currentStage = 0;
         private DateTime lastStageChange = DateTime.MinValue;
+        private int flagOpacity = FLAG_OPACITY_DEFAULT;
 
         #endregion
+
         public CoronavirusCountryStatsAction(SDConnection connection, InitialPayload payload) : base(connection, payload)
         {
             if (payload.Settings == null || payload.Settings.Count == 0)
@@ -116,6 +128,12 @@ namespace BarRaider.Coronavirus
             {
                 settings.Countries = countriesStats.OrderBy(c => c.Name).Select(c => new Country(c.Name)).ToList();
             }
+
+            if (!Int32.TryParse(settings.FlagOpacity, out flagOpacity))
+            {
+                settings.FlagOpacity = FLAG_OPACITY_DEFAULT.ToString();
+            }
+
             Logger.Instance.LogMessage(TracingLevel.INFO, $"Loaded ${settings.Countries.Count} countries");
             await SaveSettings();
         }
@@ -160,6 +178,21 @@ namespace BarRaider.Coronavirus
                 int width = img.Width;
                 float heightPosition = 10;
                 string text;
+
+                if (settings.ShowFlag && stats.Info != null && !String.IsNullOrEmpty(stats.Info.FlagURL))
+                {
+                    using (Bitmap flag = FetchImage(stats.Info.FlagURL))
+                    {
+                        if (flag != null)
+                        {
+                            float opacity = flagOpacity / 100f;
+                            using (Image opacityFlag = GraphicUtils.SetImageOpacity(flag, opacity))
+                            {
+                                graphics.DrawImage(opacityFlag, 0, 0, img.Width, img.Height);
+                            }
+                        }
+                    }
+                }
 
                 var font = new Font("Verdana", 23, FontStyle.Bold, GraphicsUnit.Pixel);
                 var fontRecoveryTitle = new Font("Verdana", 20, FontStyle.Bold, GraphicsUnit.Pixel);
@@ -225,6 +258,31 @@ namespace BarRaider.Coronavirus
                 await Connection.SetImageAsync(img);
                 graphics.Dispose();
             }
+        }
+
+        private Bitmap FetchImage(string imageUrl)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(imageUrl))
+                {
+                    return null;
+                }
+
+                using (WebClient client = new WebClient())
+                {
+                    using (Stream stream = client.OpenRead(imageUrl))
+                    {
+                        Bitmap image = new Bitmap(stream);
+                        return image;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.LogMessage(TracingLevel.ERROR, $"Failed to fetch image: {imageUrl} {ex}");
+            }
+            return null;
         }
 
         #endregion
