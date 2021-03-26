@@ -131,21 +131,21 @@ namespace BarRaider.Coronavirus
                 using (icon = IconChar.Ambulance.ToBitmap(ICON_SIZE_PIXELS, Color.Orange))
                 {
                     graphics.DrawImage(icon, new Point(ICON_STARTING_X, (int)heightPosition));
-                    heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, GraphicUtils.FormatNumber(allCases), font, Brushes.Orange, new PointF(TEXT_PADDING_X, heightPosition + +TEXT_PADDING_Y));
+                    heightPosition = graphics.DrawAndMeasureString(Tools.FormatNumber(allCases), font, Brushes.Orange, new PointF(TEXT_PADDING_X, heightPosition + +TEXT_PADDING_Y));
                 }
                 heightPosition += ICON_PADDING_Y;
                 using (icon = IconChar.SkullCrossbones.ToBitmap(ICON_SIZE_PIXELS, Color.Red))
                 {
                     graphics.DrawImage(icon, new Point(ICON_STARTING_X, (int)heightPosition));
-                    heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, GraphicUtils.FormatNumber(deaths), font, Brushes.Red, new PointF(TEXT_PADDING_X, heightPosition + TEXT_PADDING_Y));
+                    heightPosition = graphics.DrawAndMeasureString(Tools.FormatNumber(deaths), font, Brushes.Red, new PointF(TEXT_PADDING_X, heightPosition + TEXT_PADDING_Y));
                 }
                 heightPosition += ICON_PADDING_Y;
 
-                heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, "Recovered:", fontRecoveryTitle, Brushes.Green, new PointF(ICON_STARTING_X, heightPosition));
+                heightPosition = graphics.DrawAndMeasureString("Recovered:", fontRecoveryTitle, Brushes.Green, new PointF(ICON_STARTING_X, heightPosition));
                 // Put percentage exactly in middle
                 text = $"{(int)recoveryRate}%";
-                float stringWidth = GraphicUtils.CenterText(text, width, fontRecovery, graphics, ICON_STARTING_X);
-                GraphicUtils.DrawStringOnGraphics(graphics, text, fontRecovery, Brushes.Green, new PointF(stringWidth, heightPosition));
+                float stringWidth = graphics.GetTextCenter(text, width, fontRecovery, ICON_STARTING_X);
+                graphics.DrawAndMeasureString(text, fontRecovery, Brushes.Green, new PointF(stringWidth, heightPosition));
 
                 await Connection.SetImageAsync(img);
                 graphics.Dispose();

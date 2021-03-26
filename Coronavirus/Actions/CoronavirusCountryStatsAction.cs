@@ -186,7 +186,7 @@ namespace BarRaider.Coronavirus
                         if (flag != null)
                         {
                             float opacity = flagOpacity / 100f;
-                            using (Image opacityFlag = GraphicUtils.SetImageOpacity(flag, opacity))
+                            using (Image opacityFlag = GraphicsTools.CreateOpacityImage(flag, opacity))
                             {
                                 graphics.DrawImage(opacityFlag, 0, 0, img.Width, img.Height);
                             }
@@ -199,8 +199,8 @@ namespace BarRaider.Coronavirus
                 var fontRecovery = new Font("Verdana", 30, FontStyle.Bold, GraphicsUnit.Pixel);
 
                 Bitmap icon;
-                float stringWidth = GraphicUtils.CenterText(stats.Name, width, font, graphics, 0);
-                heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, stats.Name, font, Brushes.White, new PointF(stringWidth, heightPosition));
+                float stringWidth = graphics.GetTextCenter(stats.Name, width, font, 0);
+                heightPosition = graphics.DrawAndMeasureString(stats.Name, font, Brushes.White, new PointF(stringWidth, heightPosition));
                 heightPosition += COUNTRY_NAME_PADDING_Y;
                 float widthPosition = 0;
                 switch (currentStage)
@@ -220,38 +220,38 @@ namespace BarRaider.Coronavirus
                         */
                          using (icon = IconChar.Ambulance.ToBitmap(ICON_SIZE_PIXELS, Color.Orange))
                         {  
-                            text = $"{GraphicUtils.FormatNumber(allCases)}";
-                            widthPosition = GraphicUtils.CenterText(text, width, font, graphics);
+                            text = $"{Tools.FormatNumber(allCases)}";
+                            widthPosition = graphics.GetTextCenter(text, width, font);
                             widthPosition -= ((ICON_SIZE_PIXELS + ICON_STARTING_X) / 2); // Add room for the icon
                             graphics.DrawImage(icon, new PointF(widthPosition, (int)heightPosition));
-                            heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, text, font, Brushes.Orange, new PointF(widthPosition + ICON_SIZE_PIXELS + ICON_STARTING_X, heightPosition + TEXT_PADDING_Y));
+                            heightPosition = graphics.DrawAndMeasureString(text, font, Brushes.Orange, new PointF(widthPosition + ICON_SIZE_PIXELS + ICON_STARTING_X, heightPosition + TEXT_PADDING_Y));
                             text = $"({stats.TodayCases})";
-                            widthPosition = GraphicUtils.CenterText(text, width, font, graphics);
-                            heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, text, font, Brushes.Orange, new PointF(widthPosition, heightPosition));
+                            widthPosition = graphics.GetTextCenter(text, width, font);
+                            heightPosition = graphics.DrawAndMeasureString(text, font, Brushes.Orange, new PointF(widthPosition, heightPosition));
                         }
 
                         break;
                     case 1: // Deaths
                         using (icon = IconChar.SkullCrossbones.ToBitmap(ICON_SIZE_PIXELS, Color.Red))
                         {
-                            text = $"{GraphicUtils.FormatNumber(deaths)}";
-                            widthPosition = GraphicUtils.CenterText(text, width, font, graphics);
+                            text = $"{Tools.FormatNumber(deaths)}";
+                            widthPosition = graphics.GetTextCenter(text, width, font);
                             widthPosition -= ((ICON_SIZE_PIXELS + ICON_STARTING_X) / 2); // Add room for the icon
                             graphics.DrawImage(icon, new PointF(widthPosition, (int)heightPosition));
-                            heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, text, font, Brushes.Red, new PointF(widthPosition + ICON_SIZE_PIXELS + ICON_STARTING_X, heightPosition + TEXT_PADDING_Y));
+                            heightPosition = graphics.DrawAndMeasureString(text, font, Brushes.Red, new PointF(widthPosition + ICON_SIZE_PIXELS + ICON_STARTING_X, heightPosition + TEXT_PADDING_Y));
                             text = $"({ stats.TodayDeaths})";
-                            widthPosition = GraphicUtils.CenterText(text, width, font, graphics);
-                            heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, text, font, Brushes.Red, new PointF(widthPosition, heightPosition));
+                            widthPosition = graphics.GetTextCenter(text, width, font);
+                            heightPosition = graphics.DrawAndMeasureString(text, font, Brushes.Red, new PointF(widthPosition, heightPosition));
                         }
                         break;
                     case 2: // Recovery
                         text = "Recovered:";
-                        widthPosition = GraphicUtils.CenterText(text, width, font, graphics, 3);
-                        heightPosition = GraphicUtils.DrawStringOnGraphics(graphics, text, fontRecoveryTitle, Brushes.Green, new PointF(widthPosition, heightPosition));
+                        widthPosition = graphics.GetTextCenter(text, width, font, 3);
+                        heightPosition = graphics.DrawAndMeasureString(text, fontRecoveryTitle, Brushes.Green, new PointF(widthPosition, heightPosition));
                         // Put percentage exactly in middle
                         text = $"{(int)recoveryRate}%";
-                        widthPosition = GraphicUtils.CenterText(text, width, fontRecovery, graphics, ICON_STARTING_X);
-                        GraphicUtils.DrawStringOnGraphics(graphics, text, fontRecovery, Brushes.Green, new PointF(widthPosition, heightPosition));
+                        widthPosition = graphics.GetTextCenter(text, width, fontRecovery, ICON_STARTING_X);
+                        graphics.DrawAndMeasureString(text, fontRecovery, Brushes.Green, new PointF(widthPosition, heightPosition));
                         break;
                 }
 
