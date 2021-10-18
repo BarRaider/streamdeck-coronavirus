@@ -128,13 +128,13 @@ namespace BarRaider.Coronavirus
                 var fontRecovery = new Font("Verdana", 30, FontStyle.Bold, GraphicsUnit.Pixel);
 
                 Bitmap icon;
-                using (icon = IconChar.Ambulance.ToBitmap(ICON_SIZE_PIXELS, Color.Orange))
+                using (icon = IconChar.Ambulance.ToBitmap(width: ICON_SIZE_PIXELS, color: Color.Orange))
                 {
                     graphics.DrawImage(icon, new Point(ICON_STARTING_X, (int)heightPosition));
                     heightPosition = graphics.DrawAndMeasureString(Tools.FormatNumber(allCases), font, Brushes.Orange, new PointF(TEXT_PADDING_X, heightPosition + +TEXT_PADDING_Y));
                 }
                 heightPosition += ICON_PADDING_Y;
-                using (icon = IconChar.SkullCrossbones.ToBitmap(ICON_SIZE_PIXELS, Color.Red))
+                using (icon = IconChar.SkullCrossbones.ToBitmap(width: ICON_SIZE_PIXELS, color: Color.Red))
                 {
                     graphics.DrawImage(icon, new Point(ICON_STARTING_X, (int)heightPosition));
                     heightPosition = graphics.DrawAndMeasureString(Tools.FormatNumber(deaths), font, Brushes.Red, new PointF(TEXT_PADDING_X, heightPosition + TEXT_PADDING_Y));

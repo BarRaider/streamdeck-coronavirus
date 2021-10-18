@@ -147,7 +147,6 @@ namespace BarRaider.Coronavirus
         {
             const int ICON_STARTING_X = 3;
             const int TEXT_PADDING_Y = 3;
-            const int TEXT_PADDING_X = 40;
             const int ICON_SIZE_PIXELS = 35;
             const int COUNTRY_NAME_PADDING_Y = 10;
 
@@ -218,7 +217,7 @@ namespace BarRaider.Coronavirus
                             heightPosition = Utils.DrawStringOnGraphics(graphics, text, font, Brushes.Orange, new PointF(widthPosition, heightPosition + TEXT_PADDING_Y));
                         }
                         */
-                         using (icon = IconChar.Ambulance.ToBitmap(ICON_SIZE_PIXELS, Color.Orange))
+                         using (icon = IconChar.Ambulance.ToBitmap(width: ICON_SIZE_PIXELS, color: Color.Orange))
                         {  
                             text = $"{Tools.FormatNumber(allCases)}";
                             widthPosition = graphics.GetTextCenter(text, width, font);
@@ -232,7 +231,7 @@ namespace BarRaider.Coronavirus
 
                         break;
                     case 1: // Deaths
-                        using (icon = IconChar.SkullCrossbones.ToBitmap(ICON_SIZE_PIXELS, Color.Red))
+                        using (icon = IconChar.SkullCrossbones.ToBitmap(width: ICON_SIZE_PIXELS, color: Color.Red))
                         {
                             text = $"{Tools.FormatNumber(deaths)}";
                             widthPosition = graphics.GetTextCenter(text, width, font);
