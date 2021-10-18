@@ -3,6 +3,7 @@ Coronavirus (COVID-19) live stats on the Stream Deck
 
 **Author's website and contact information:** [https://barraider.com](https://barraider.com)
 
+
 Features:
 - `Worldwide Stats` shows you the global stats including number of cases, number of deaths, and overall recoveries rate. Press the Stream Deck key to open the stats in the browser.
 - `Country Stats` shows you the stats for a specific country, including today's changes in number of cases and deaths. Press the Stream Deck key to open the stats in the browser.
